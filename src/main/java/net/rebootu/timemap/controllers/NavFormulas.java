@@ -17,7 +17,7 @@ public class NavFormulas {
      * @return LatLng
      */
     public static LatLng destination(LatLng origin, double distance, double bearing) {
-        final double EARTH_R = 6371e3;          // mean radius of earth in meters
+        final double EARTH_R = 6371.0e3;          // mean radius of earth in meters
 
         if (origin.lat < -90.0 || origin.lat > 90.0)
             throw new IllegalArgumentException("Origin's latitude value exceeds +/- 90 deg");
@@ -50,10 +50,9 @@ public class NavFormulas {
         return new LatLng(lat2, lng2);
     }
 
-    // TODO might make an easier version of this if accuracy at small angels is poor
     // calculate distance using haversine formula
     public static double distBetweenPts(LatLng pt1, LatLng pt2) {
-        final double EARTH_R = 6371e3;          // mean radius of earth in meters
+        final double EARTH_R = 6371.0e3;          // mean radius of earth in meters
 
         double psi1 = Math.toRadians(pt1.lat);
         double psi2 = Math.toRadians(pt2.lat);
@@ -70,5 +69,25 @@ public class NavFormulas {
         double distance = EARTH_R * c;
 
         return distance;
+    }
+
+    // calculate initial bearing from origin to destination along great circle
+    public static double initBearing(LatLng origin, LatLng dest) {
+        final double EARTH_R = 6371.0e3;
+
+        origin.lat = Math.toRadians(origin.lat);
+        origin.lng = Math.toRadians(origin.lng);
+        dest.lat = Math.toRadians(dest.lat);
+        dest.lng = Math.toRadians(dest.lng);
+
+        double y = Math.sin(dest.lng - origin.lng) * Math.cos(dest.lat);
+        double x = Math.cos(origin.lat) * Math.sin(dest.lat) -
+                   Math.sin(origin.lat) * Math.cos(dest.lat) * Math.cos(dest.lng - origin.lng);
+        double bearing = Math.toDegrees(Math.atan2(y, x));
+
+        // change bearing from +/-180 to 0-360 range using floating point modulus (Math.IEEEremainder() is also an option)
+        bearing = (bearing + 360.0) % 360.0;
+
+        return bearing;
     }
 }

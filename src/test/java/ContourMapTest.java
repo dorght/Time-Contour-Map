@@ -7,7 +7,7 @@ import org.junit.Test;
 
 
 /**
- * Created by sean on 6/4/15.
+ * Created by Sean on 6/4/15.
  */
 public class ContourMapTest extends TestCase {
     @Test

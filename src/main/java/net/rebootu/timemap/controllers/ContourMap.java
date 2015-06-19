@@ -51,7 +51,6 @@ public class ContourMap {
                 LatLng destpt = NavFormulas.destination(origin, dist, arcsum);
                 Destination querypt = new Destination();
                 querypt.setQueryPt(destpt);
-System.out.println(destpt.toString());
                 // add query point to the array and increment the sum of arc angles
                 querypts[point++] = querypt;
                 arcsum += arcangle;
