@@ -3,41 +3,47 @@ package net.rebootu.timemap.controllers;
 import com.google.maps.model.LatLng;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by sean on 6/1/15.
  */
 public class Destination  implements Serializable {
-    private final int NEAREST_ARRAY_SIZE = 5;
     private static int nodeId;
+    private final int NEAREST_ARRAY_SIZE = 5;
 
-    // point returned from google reverse geocoding as closest address
-    private LatLng locationpt;
-    private Destination[] nearestNeighbor = new Destination[NEAREST_ARRAY_SIZE];
+    // location point is the point returned from google reverse geocoding as closest address to the query point
+    private LatLngSerial querypt;                       // decimal degrees
+    private LatLngSerial locationpt;
 
+    private ArrayList<Destination> nearestNeighbor = new ArrayList<Destination>();
     private int timefromorigin;                         // seconds
-    private int distancefromorigin;                     // meters
-    private LatLng querypt;
+    private long distancefromorigin;                     // meters
+    private int initialbearing;                         // degrees from true N
 
-// www.movable-type.co.uk/scripts/latlong.html
     // find gradiant in travel time between to destination points
-  public static double travelTimeGradiant(Destination dest1, Destination dest2) {
-        return Math.abs(dest1.getTimefromorigin() - dest2.getTimefromorigin()) /
-                  NavFormulas.distBetweenPts(dest1.locationpt, dest2.locationpt);
-  }
+    public static double travelTimeGradiant(Destination dest1, Destination dest2) {
+        double timediff = Math.abs(dest1.getTimefromorigin() - dest2.getTimefromorigin());
+        double distance = NavFormulas.distBetweenPts(dest1.locationpt.toLatLng(), dest2.locationpt.toLatLng());
+        double gradiant = timediff / distance;
+
+        return gradiant;
+    }
 
     public LatLng getQueryPt() {
-        return this.querypt;
+        return this.querypt.toLatLng();
     }
     public void setQueryPt(LatLng query) {
-        this.querypt = query;
+        this.querypt = LatLngSerial.toLatLngSerial(query);
     }
 
     public LatLng getLocationpt() {
-        return this.locationpt;
+        return this.locationpt.toLatLng();
     }
-    public void setLocationpt(LatLng locationpt) {
-        this.locationpt = locationpt;
+    public void setLocationpt(LatLng origin, LatLng locationpt) {
+        this.locationpt = LatLngSerial.toLatLngSerial(locationpt);
+        setDistancefromorigin(origin);
+        setInitalBearing(origin);
     }
 
     public int getTimefromorigin() {
@@ -47,11 +53,19 @@ public class Destination  implements Serializable {
         this.timefromorigin = timefromorigin;
     }
 
-    public int getDistancefromorigin() {
+    public long getDistancefromorigin() {
         return this.distancefromorigin;
     }
-    public void setDistancefromorigin(int distancefromorigin) {
-        this.distancefromorigin = distancefromorigin;
+    public void setDistancefromorigin(LatLng origin) {
+        this.distancefromorigin = Math.round(NavFormulas.distBetweenPts(origin, this.getLocationpt()));
+    }
+
+
+    public int getInitialBearing() {
+        return this.initialbearing;
+    }
+    public void setInitalBearing(LatLng origin) {
+        this.initialbearing = (int) Math.round(NavFormulas.initBearing(origin, this.getLocationpt()));
     }
 
 }

@@ -4,6 +4,8 @@ import net.rebootu.timemap.controllers.ContourMap;
 import net.rebootu.timemap.controllers.Destination;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static net.rebootu.timemap.controllers.GoogleQuery.getQueryString;
 
 /**
@@ -16,7 +18,7 @@ public class GoogleQueryTest extends TestCase {
         ContourMap map = new ContourMap();
 
         LatLng origin = new LatLng(Double.parseDouble(System.getenv("HOME_LAT")), Double.parseDouble(System.getenv("HOME_LNG")));
-        Destination[] querypts = map.getInitialQueryPts(origin, 46510, 4, 1);
+        ArrayList<Destination> querypts = map.getInitialQueryPts(origin, 46510, 4, 1);
 
         System.out.println(getQueryString(origin, querypts));
     }
@@ -27,7 +29,7 @@ public class GoogleQueryTest extends TestCase {
 
         LatLng origin = new LatLng(Double.parseDouble(System.getenv("HOME_LAT")), Double.parseDouble(System.getenv("HOME_LNG")));
 
-        Destination[] querypts = map.getInitialQueryPts(origin, 46510, 79, 4);
+        ArrayList<Destination> querypts = map.getInitialQueryPts(origin, 46510, 79, 4);
         System.out.println(getQueryString(origin, querypts));
     }
 
@@ -37,7 +39,7 @@ public class GoogleQueryTest extends TestCase {
 
         LatLng origin = new LatLng(Double.parseDouble(System.getenv("HOME_LAT")), Double.parseDouble(System.getenv("HOME_LNG")));
 
-        Destination[] querypts = map.getInitialQueryPts(origin, 46510, 100, 4);
+        ArrayList<Destination> querypts = map.getInitialQueryPts(origin, 46510, 100, 4);
         System.out.println(getQueryString(origin, querypts));
     }
 

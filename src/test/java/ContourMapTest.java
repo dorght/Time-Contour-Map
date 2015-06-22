@@ -5,6 +5,8 @@ import net.rebootu.timemap.controllers.ContourMap;
 import net.rebootu.timemap.controllers.Destination;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by Sean on 6/4/15.
@@ -15,16 +17,16 @@ public class ContourMapTest extends TestCase {
         ContourMap map = new ContourMap();
         LatLng origin = new LatLng(0.0, 0.0);
         // 111195 meters in deg of arc @ mean Radius
-        Destination[] querypts = map.getInitialQueryPts(origin, 111195, 4, 1);
+        ArrayList<Destination> querypts = map.getInitialQueryPts(origin, 111195, 4, 1);
 
-        assertEquals(1.0, querypts[0].getQueryPt().lat, 0.001);
-        assertEquals(0.0, querypts[0].getQueryPt().lng, 0.001);
-        assertEquals(0.0, querypts[1].getQueryPt().lat, 0.001);
-        assertEquals(1.0, querypts[1].getQueryPt().lng, 0.001);
-        assertEquals(-1.0,querypts[2].getQueryPt().lat, 0.001);
-        assertEquals(0.0, querypts[2].getQueryPt().lng, 0.001);
-        assertEquals(0.0, querypts[3].getQueryPt().lat, 0.001);
-        assertEquals(-1.0, querypts[3].getQueryPt().lng, 0.001);
+        assertEquals(1.0, querypts.get(0).getQueryPt().lat, 0.001);
+        assertEquals(0.0, querypts.get(0).getQueryPt().lng, 0.001);
+        assertEquals(0.0, querypts.get(1).getQueryPt().lat, 0.001);
+        assertEquals(1.0, querypts.get(1).getQueryPt().lng, 0.001);
+        assertEquals(-1.0,querypts.get(2).getQueryPt().lat, 0.001);
+        assertEquals(0.0, querypts.get(2).getQueryPt().lng, 0.001);
+        assertEquals(0.0, querypts.get(3).getQueryPt().lat, 0.001);
+        assertEquals(-1.0, querypts.get(3).getQueryPt().lng, 0.001);
     }
 
     @Test
@@ -32,16 +34,16 @@ public class ContourMapTest extends TestCase {
         ContourMap map = new ContourMap();
         LatLng origin = new LatLng(0.0, 180.0);
         // 111195 meters in deg of arc @ mean Radius
-        Destination[] querypts = map.getInitialQueryPts(origin, 111195, 4, 1);
+        ArrayList<Destination> querypts = map.getInitialQueryPts(origin, 111195, 4, 1);
 
-        assertEquals(1.0, querypts[0].getQueryPt().lat, 0.001);
-        assertEquals(180.0, querypts[0].getQueryPt().lng, 0.001);
-        assertEquals(0.0, querypts[1].getQueryPt().lat, 0.001);
-        assertEquals(-179.0, querypts[1].getQueryPt().lng, 0.001);
-        assertEquals(-1.0,querypts[2].getQueryPt().lat, 0.001);
-        assertEquals(180.0, querypts[2].getQueryPt().lng, 0.001);
-        assertEquals(0.0, querypts[3].getQueryPt().lat, 0.001);
-        assertEquals(179.0, querypts[3].getQueryPt().lng, 0.001);
+        assertEquals(1.0, querypts.get(0).getQueryPt().lat, 0.001);
+        assertEquals(180.0, querypts.get(0).getQueryPt().lng, 0.001);
+        assertEquals(0.0, querypts.get(1).getQueryPt().lat, 0.001);
+        assertEquals(-179.0, querypts.get(1).getQueryPt().lng, 0.001);
+        assertEquals(-1.0,querypts.get(2).getQueryPt().lat, 0.001);
+        assertEquals(180.0, querypts.get(2).getQueryPt().lng, 0.001);
+        assertEquals(0.0, querypts.get(3).getQueryPt().lat, 0.001);
+        assertEquals(179.0, querypts.get(3).getQueryPt().lng, 0.001);
     }
 
     @Test
@@ -49,15 +51,15 @@ public class ContourMapTest extends TestCase {
         ContourMap map = new ContourMap();
         LatLng origin = new LatLng(89.0, 0.0);
         // 2 degs * 111195 meters in deg of arc @ mean Radius
-        Destination[] querypts = map.getInitialQueryPts(origin, 222390, 4, 1);
+        ArrayList<Destination> querypts = map.getInitialQueryPts(origin, 222390, 4, 1);
 
         // formula used assumed great circle navigation and given an initial bearing
-        assertEquals(89.0, querypts[0].getQueryPt().lat, 0.001);
-        assertEquals(180.0, querypts[0].getQueryPt().lng, 0.001);
-        assertTrue(89.0 > querypts[1].getQueryPt().lat);
-        assertEquals(87.0,querypts[2].getQueryPt().lat, 0.001);
-        assertEquals(0.0, querypts[2].getQueryPt().lng, 0.001);
-        assertTrue(89.0 > querypts[3].getQueryPt().lat);
+        assertEquals(89.0, querypts.get(0).getQueryPt().lat, 0.001);
+        assertEquals(180.0, querypts.get(0).getQueryPt().lng, 0.001);
+        assertTrue(89.0 > querypts.get(1).getQueryPt().lat);
+        assertEquals(87.0,querypts.get(2).getQueryPt().lat, 0.001);
+        assertEquals(0.0, querypts.get(2).getQueryPt().lng, 0.001);
+        assertTrue(89.0 > querypts.get(3).getQueryPt().lat);
     }
 
     @Test
@@ -65,15 +67,17 @@ public class ContourMapTest extends TestCase {
         ContourMap map = new ContourMap();
         LatLng origin = new LatLng(-89.0, 0.0);
         // 2 degs * 111195 meters in deg of arc @ mean Radius
-        Destination[] querypts = map.getInitialQueryPts(origin, 222390, 4, 1);
+        ArrayList<Destination> querypts = map.getInitialQueryPts(origin, 222390, 4, 1);
 
         // formula used assumed great circle navigation and given an initial bearing
-        assertEquals(-87.0, querypts[0].getQueryPt().lat, 0.001);
-        assertEquals(0.0, querypts[0].getQueryPt().lng, 0.001);
-        assertTrue(-89.0 < querypts[1].getQueryPt().lat);
-        assertEquals(-89.0,querypts[2].getQueryPt().lat, 0.001);
-        assertEquals(180.0, querypts[2].getQueryPt().lng, 0.001);
-        assertTrue(-89.0 < querypts[3].getQueryPt().lat);
+        assertEquals(-87.0, querypts.get(0).getQueryPt().lat, 0.001);
+        assertEquals(0.0, querypts.get(0).getQueryPt().lng, 0.001);
+        assertTrue(-89.0 < querypts.get(1).getQueryPt().lat);
+        assertEquals(-89.0,querypts.get(2).getQueryPt().lat, 0.001);
+        assertEquals(180.0, querypts.get(2).getQueryPt().lng, 0.001);
+        assertTrue(-89.0 < querypts.get(3).getQueryPt().lat);
+
+        assertEquals(4, querypts.size());
     }
 
     @Test
@@ -81,9 +85,9 @@ public class ContourMapTest extends TestCase {
         ContourMap map = new ContourMap();
         LatLng origin = new LatLng(38.6, -90.0);
         // use defaults and 30km radius
-        Destination[] querypts = map.getInitialQueryPts(origin, 30000);
+        ArrayList<Destination> querypts = map.getInitialQueryPts(origin, 30000);
 
         // formula used assumed great circle navigation and given an initial bearing
-        assertEquals(100, querypts.length);
+        assertEquals(79, querypts.size());
     }
 }

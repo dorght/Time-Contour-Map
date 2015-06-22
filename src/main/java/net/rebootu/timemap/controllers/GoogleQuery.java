@@ -2,6 +2,8 @@ package net.rebootu.timemap.controllers;
 
 import com.google.maps.model.LatLng;
 
+import java.util.ArrayList;
+
 import static net.rebootu.timemap.controllers.GoogleMapsApiKey.getGoogleMapsApiKey;
 
 /**
@@ -10,7 +12,7 @@ import static net.rebootu.timemap.controllers.GoogleMapsApiKey.getGoogleMapsApiK
 public class GoogleQuery {
 
     // get array of query points and assemble query string
-    public static String getQueryString(LatLng origin, Destination[] destinations) {
+    public static String getQueryString(LatLng origin, ArrayList<Destination> destinations) {
         final int MAX_DESTINATIONS = 79;
         final String API_KEY = getGoogleMapsApiKey();
 
@@ -20,7 +22,7 @@ public class GoogleQuery {
             throw new IllegalArgumentException("Origin's latitude value exceeds +/- 90 deg");
         else if (origin.lng < -180.0 || origin.lng > 180.0)
             throw new IllegalArgumentException("Origin's longitude value exceeds +/- 180 deg");
-        else if (destinations.length > MAX_DESTINATIONS)
+        else if (destinations.size() > MAX_DESTINATIONS)
             throw new IllegalArgumentException("URL string can accommodate at most 79 destinations");
 
 

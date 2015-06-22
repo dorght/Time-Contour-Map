@@ -1,5 +1,6 @@
 package net.rebootu.timemap.controllers;
 
+
 import com.google.maps.model.LatLng;
 
 /**

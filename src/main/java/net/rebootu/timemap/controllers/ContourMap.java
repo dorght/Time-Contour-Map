@@ -1,7 +1,8 @@
 package net.rebootu.timemap.controllers;
 
 import com.google.maps.model.LatLng;
-import sun.security.krb5.internal.crypto.Des;
+
+import java.util.ArrayList;
 
 /**
  * Created by sean on 6/3/15.
@@ -29,9 +30,9 @@ public class ContourMap {
      * @param levels number of rings to divide map area into
      * @return an array of initial Destination points filled with beginning query points to submit to Google
      */
-    public static Destination[] getInitialQueryPts(LatLng origin, int mapradius, int points, int levels) {
+    public static ArrayList<Destination> getInitialQueryPts(LatLng origin, int mapradius, int points, int levels) {
 
-        Destination[] querypts = new Destination[points];
+        ArrayList<Destination> querypts = new ArrayList<Destination>();
         int point = 0;
 
         // evenly distribute the total number of points among all the rings
@@ -52,7 +53,8 @@ public class ContourMap {
                 Destination querypt = new Destination();
                 querypt.setQueryPt(destpt);
                 // add query point to the array and increment the sum of arc angles
-                querypts[point++] = querypt;
+                querypts.add(querypt);
+                point++;
                 arcsum += arcangle;
             }
         }
@@ -66,7 +68,7 @@ public class ContourMap {
      * @param mapradius half of smallest map dimension to be considered (meters)
      * @return an array of initial Destination points filled with beginning query points to submit to Google
      */
-    public static Destination[] getInitialQueryPts(LatLng origin, int mapradius) {
+    public static ArrayList<Destination> getInitialQueryPts(LatLng origin, int mapradius) {
         // points limited to 79 by the character length of the generated URL query string
         final int POINTS = 79;
         final int LEVELS = 4;
