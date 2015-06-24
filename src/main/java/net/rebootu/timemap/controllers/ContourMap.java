@@ -9,12 +9,6 @@ import java.util.ArrayList;
  */
 public class ContourMap {
 
-//    Contour[] contours;
-
-//    public calculateConours() {
-//    }
-
-
 //    public ContourMap(UserLocation userLoc) {
 //        this.userLocation = userLoc;
 //        this.destination = getInitialQueryPts(userLoc.getLatLong(), this.radius);

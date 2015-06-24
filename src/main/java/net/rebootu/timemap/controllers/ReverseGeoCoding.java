@@ -15,14 +15,14 @@ import static net.rebootu.timemap.controllers.GoogleMapsApiKey.getGoogleMapsApiK
 /**
  * Created by sean on 6/9/15.
  */
-public class ReverseGeoCodingTrial {
+public class ReverseGeoCoding {
 
 
     public static void main(String args[]) throws IOException {
         GeoApiContext context = new GeoApiContext().setApiKey(getGoogleMapsApiKey());
         LatLng origin = UserLocation.userLocation();
 
-        ArrayList<Destination> querypts = getInitialQueryPts(origin, 46510, 25, 1);
+        ArrayList<Destination> querypts = getInitialQueryPts(origin, 46510, 40, 1);
         GeocodingResult[] results = null;
 
 
@@ -60,7 +60,7 @@ public class ReverseGeoCodingTrial {
                                                                     + "&path=fillcolor:0x00AA0033"
                                                                         + "|color:0xFFFFFF00"
                                                                         + "|enc:"
-                                                                            + "_}tjFvhmgPut@a|Q`cFeqPfvP~\\j~Fj{MabCdqP_aM`dC"
+                                                                            + "yetjFxrlfPkLuxJ~rCnaCheBzaClaGha@dzIe_BdlCveLuhDv_CcN|kKa}AnjC}|BrjDm|FvXkjBcyAi~Cwv@"
                                                                     + "&path=fillcolor:0x0000AA33"
                                                                         + "|color:0xFFFFFF00"
                                                                         + "|enc:"
@@ -68,14 +68,14 @@ public class ReverseGeoCodingTrial {
 System.out.println(URL);
 System.out.println("URL length is " + URL.length());
 
-//        FileOutputStream fileStream = null;
-//        try {
-//            fileStream = new FileOutputStream("destination_pts.ser");
-//            ObjectOutputStream os = new ObjectOutputStream(fileStream);
-//            os.writeObject(querypts);
-//            os.close();
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
+        FileOutputStream fileStream = null;
+        try {
+            fileStream = new FileOutputStream("destination_pts.ser");
+            ObjectOutputStream os = new ObjectOutputStream(fileStream);
+            os.writeObject(querypts);
+            os.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }
